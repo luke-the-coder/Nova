@@ -16,7 +16,6 @@ class ListModel: ObservableObject {
                 case .success(let posts):
                     
                     self?.posts = posts
-                    print(self?.posts)
                 case .failure:
                     print("NO")
                     self?.posts = []

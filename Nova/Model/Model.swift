@@ -12,61 +12,42 @@ struct Post: Model {
     let author: String
     let url: String
     let subreddit: String
-//    let media : Media
+    let media : Media?
+    let video : Bool
+    let domain : String
 }
-//
-//struct Media: Decodable {
-//    let video : Video
-//}
-//struct Video : Decodable{
-//    let fallback_url : String
-//}
-//
-//extension Media {
-//    enum CodingKeys : String, CodingKey{
-//        case video
-//        case data
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        let dataContainer = try values.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
-//        video = try dataContainer.decode(Video.self, forKey: .video)
-//    }
-//}
-//extension Video {
-//    enum CodingKeys : String, CodingKey{
-//        case fallback_url
-//        case data
-//    }
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        let dataContainer = try values.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
-//        fallback_url = try dataContainer.decode(String.self, forKey: .fallback_url)
-//    }
-//}
+struct Media: Decodable {
+    let type : String?
+    let reddit_video : Video?
+}
+struct Video : Decodable{
+    let fallback_url : String?
+}
+
 extension Post: Decodable {
     enum CodingKeys: String, CodingKey{
-        case id, title, author, url, media
-        case subreddit = "subreddit_name_prefixed"
+        case id, title, author, url, media, domain
+        case subreddit = "subreddit_name_prefixed", video = "is_video"
         case data
     }
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let dataContainer = try values.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
-
+        
         id = try dataContainer.decode(String.self, forKey: .id)
         title = try dataContainer.decode(String.self, forKey: .title)
         author = try dataContainer.decode(String.self, forKey: .author)
         url = try dataContainer.decode(String.self, forKey: .url)
         subreddit = try dataContainer.decode(String.self, forKey: .subreddit)
-//        media = try dataContainer.decode(Media.self, forKey: .media)
+        media = try dataContainer.decode(Media?.self, forKey: .media)
+        video = try dataContainer.decode(Bool.self, forKey: .video)
+        domain = try dataContainer.decode(String.self, forKey: .domain)
     }
 }
 
 extension Listing: Decodable {
     enum CodingKeys: String, CodingKey {
         case posts = "children"
-
         case data
     }
 
@@ -77,26 +58,3 @@ extension Listing: Decodable {
         posts = try data.decode([Post].self, forKey: .posts)
     }
 }
-
-//non funziona
-//import Foundation
-//protocol Model: Identifiable, Decodable {}
-//struct Root : Codable {
-//    let kind : String
-//    var root = [DataContent]()
-//}
-//
-//struct DataContent : Codable{
-//    var children = [Post]()
-//}
-//struct Post : Codable{
-//    let kind : String
-//    var data = [PostDetail]()
-//}
-//struct PostDetail : Codable{
-//    let id: String
-//    let title: String
-//    let author: String
-//    let url: String
-//    let subreddit_name_prefixed: String
-//}

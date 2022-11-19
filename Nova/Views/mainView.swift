@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import AVKit
 struct mainView: View{
     let myAPI = API()
     @ObservedObject var list = ListModel(myAPI: API())
@@ -7,21 +8,8 @@ struct mainView: View{
         
         NavigationStack{
                 List(list.posts){ post in
-                    
                     Section(header: Spacer(minLength: 0)){
-                        
-                        VStack(alignment: .leading){
-                            
-                            Text(post.title).bold()
-                            Text("u/" + post.author).italic()
-                            AsyncImage(url: URL(string: post.url), content: { image in
-                                image.resizable().aspectRatio(contentMode: .fit)//.frame(maxWidth: 300, maxHeight: 100)
-                            },
-                            placeholder: {
-                                Text("loading")
-                            })
-
-                        }
+                        PostsView(post: post)
                     }
                     
                 }.navigationTitle("r/all").toolbarBackground(Color.blue, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)

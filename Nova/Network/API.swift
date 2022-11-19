@@ -1,8 +1,5 @@
 import Foundation
 class API{
-    init() {
-        //callAPI()
-    }
     func callAPI(completion: @escaping (Result<[Post], Error>) -> Void){
         guard let url = URL(string: "https://www.reddit.com/r/all.json") else {
             print("ERROR")
@@ -14,10 +11,8 @@ class API{
             let decoder = JSONDecoder()
             do{
                 let data = data ?? Data()
-                print(data)
                 let tasks = try decoder.decode(Listing.self, from: data)
-                
-                print(tasks.posts[0].title)
+                //print(tasks.posts[23].media?.reddit_video?.fallback_url)
                 completion(.success(tasks.posts))
 
             }catch{
