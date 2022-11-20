@@ -7,15 +7,16 @@ struct mainView: View{
     var body: some View {
         
         NavigationStack{
+            ZStack{
+                Color("LightCyan").ignoresSafeArea()
                 List(list.posts){ post in
                     Section(header: Spacer(minLength: 0)){
                         PostsView(post: post)
                     }
-                    
-                }.navigationTitle("r/all").toolbarBackground(Color.blue, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+                }.scrollContentBackground(.hidden).listStyle(.grouped)
                 
-            }.onAppear(perform: fetchListing)
-            
+            }.navigationTitle("r/all").toolbarBackground(Color("pacificBlue"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar).onAppear(perform: fetchListing)
+        }
         
     }
     private func fetchListing() {

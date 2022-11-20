@@ -13,6 +13,8 @@
 		0E4F9FCC292967F500173878 /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F9FCB292967F500173878 /* ImagesView.swift */; };
 		0E4F9FCF292969CE00173878 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0E4F9FCE292969CE00173878 /* Kingfisher */; };
 		0E4F9FD12929824F00173878 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F9FD02929824F00173878 /* WebView.swift */; };
+		0E4F9FDA292A9FD700173878 /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F9FD9292A9FD700173878 /* GifView.swift */; };
+		0E4F9FDD292A9FEB00173878 /* FLAnimatedImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0E4F9FDC292A9FEB00173878 /* FLAnimatedImage */; };
 		0EF6C5972924ED6500D9F2FF /* NovaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF6C5962924ED6500D9F2FF /* NovaApp.swift */; };
 		0EF6C59B2924ED6700D9F2FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EF6C59A2924ED6700D9F2FF /* Assets.xcassets */; };
 		0EF6C59E2924ED6700D9F2FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EF6C59D2924ED6700D9F2FF /* Preview Assets.xcassets */; };
@@ -30,6 +32,8 @@
 		0E4F9FC72929613900173878 /* NovaLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NovaLaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E4F9FCB292967F500173878 /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		0E4F9FD02929824F00173878 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		0E4F9FD229299B8800173878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0E4F9FD9292A9FD700173878 /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		0EF6C5932924ED6500D9F2FF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EF6C5962924ED6500D9F2FF /* NovaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaApp.swift; sourceTree = "<group>"; };
 		0EF6C59A2924ED6700D9F2FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,6 +52,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E4F9FCF292969CE00173878 /* Kingfisher in Frameworks */,
+				0E4F9FDD292A9FEB00173878 /* FLAnimatedImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +65,7 @@
 				0E4F9FC22928F35F00173878 /* VideoView.swift */,
 				0E4F9FCB292967F500173878 /* ImagesView.swift */,
 				0E4F9FD02929824F00173878 /* WebView.swift */,
+				0E4F9FD9292A9FD700173878 /* GifView.swift */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -91,6 +97,7 @@
 		0EF6C5952924ED6500D9F2FF /* Nova */ = {
 			isa = PBXGroup;
 			children = (
+				0E4F9FD229299B8800173878 /* Info.plist */,
 				0EF6C5AF2925688800D9F2FF /* Views */,
 				0EF6C5962924ED6500D9F2FF /* NovaApp.swift */,
 				0EF6C59A2924ED6700D9F2FF /* Assets.xcassets */,
@@ -130,9 +137,9 @@
 		0EF6C5AF2925688800D9F2FF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0E4F9FC12928F35300173878 /* Media */,
 				0E4F9FC42928FB4C00173878 /* Posts */,
 				0EF6C5B02925689600D9F2FF /* mainView.swift */,
-				0E4F9FC12928F35300173878 /* Media */,
 				0EF6C5B229256B4C00D9F2FF /* searchView.swift */,
 				0EF6C5B429256B5900D9F2FF /* profileView.swift */,
 			);
@@ -157,6 +164,7 @@
 			name = Nova;
 			packageProductDependencies = (
 				0E4F9FCE292969CE00173878 /* Kingfisher */,
+				0E4F9FDC292A9FEB00173878 /* FLAnimatedImage */,
 			);
 			productName = myClient;
 			productReference = 0EF6C5932924ED6500D9F2FF /* Nova.app */;
@@ -188,6 +196,7 @@
 			mainGroup = 0EF6C58A2924ED6500D9F2FF;
 			packageReferences = (
 				0E4F9FCD292969CE00173878 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				0E4F9FDB292A9FEB00173878 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */,
 			);
 			productRefGroup = 0EF6C5942924ED6500D9F2FF /* Products */;
 			projectDirPath = "";
@@ -217,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EF6C5A92924F34600D9F2FF /* Model.swift in Sources */,
+				0E4F9FDA292A9FD700173878 /* GifView.swift in Sources */,
 				0EF6C5B12925689600D9F2FF /* mainView.swift in Sources */,
 				0E4F9FCC292967F500173878 /* ImagesView.swift in Sources */,
 				0EF6C5B329256B4C00D9F2FF /* searchView.swift in Sources */,
@@ -358,9 +368,11 @@
 				DEVELOPMENT_TEAM = 2MD4NXFV5G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Nova/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = NovaLaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -387,9 +399,11 @@
 				DEVELOPMENT_TEAM = 2MD4NXFV5G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Nova/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = NovaLaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -437,6 +451,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		0E4F9FDB292A9FEB00173878 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Flipboard/FLAnimatedImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -444,6 +466,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E4F9FCD292969CE00173878 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		0E4F9FDC292A9FEB00173878 /* FLAnimatedImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E4F9FDB292A9FEB00173878 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */;
+			productName = FLAnimatedImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

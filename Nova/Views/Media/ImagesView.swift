@@ -9,7 +9,7 @@ struct ImagesView : View {
             Image(systemName: "arrow.2.circlepath.circle")
                 .font(.largeTitle)
                 .opacity(0.3)
-        }.resizable().cancelOnDisappear(true).aspectRatio(contentMode: .fit)//.frame(width: 128, height: 128)
+        }.retry(maxCount: 3, interval: .seconds(5)).resizable().cancelOnDisappear(true).aspectRatio(contentMode: .fit)//.frame(width: 128, height: 128)
     }
 }
 

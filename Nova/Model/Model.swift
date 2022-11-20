@@ -15,6 +15,9 @@ struct Post: Model {
     let media : Media?
     let video : Bool
     let domain : String
+    let comments: Int
+    let upvote : Int
+    let creationTime : Int
 }
 struct Media: Decodable {
     let type : String?
@@ -27,7 +30,7 @@ struct Video : Decodable{
 extension Post: Decodable {
     enum CodingKeys: String, CodingKey{
         case id, title, author, url, media, domain
-        case subreddit = "subreddit_name_prefixed", video = "is_video"
+        case subreddit = "subreddit_name_prefixed", video = "is_video", comments = "num_comments", upvote = "ups", creationTime = "created_utc"
         case data
     }
     init(from decoder: Decoder) throws {
@@ -42,6 +45,9 @@ extension Post: Decodable {
         media = try dataContainer.decode(Media?.self, forKey: .media)
         video = try dataContainer.decode(Bool.self, forKey: .video)
         domain = try dataContainer.decode(String.self, forKey: .domain)
+        comments = try dataContainer.decode(Int.self, forKey: .comments)
+        upvote = try dataContainer.decode(Int.self, forKey: .upvote)
+        creationTime = try dataContainer.decode(Int.self, forKey: .creationTime)
     }
 }
 

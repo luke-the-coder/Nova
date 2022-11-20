@@ -1,12 +1,14 @@
 import Foundation
 class API{
     func callAPI(completion: @escaping (Result<[Post], Error>) -> Void){
-        guard let url = URL(string: "https://www.reddit.com/r/all.json") else {
+        guard let url = URL(string: "https://www.reddit.com/r/all.json?limit=10") else {
             print("ERROR")
             return;
         }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
         
-        URLSession.shared.dataTask(with: url){ data, response, error in
+        URLSession.shared.dataTask(with: request){ data, response, error in
             
             let decoder = JSONDecoder()
             do{

@@ -8,10 +8,10 @@ struct NovaApp: App {
         WindowGroup {
             TabView{
                 mainView().tabItem{
-                    Label("Feed", systemImage: "house")
+                    Label("Feed", systemImage: "newspaper.circle.fill")
                 }
                 searchView().tabItem{
-                    Label("Search", systemImage: "magnifyingglass.circle")
+                    Label("Search", systemImage: "magnifyingglass.circle.fill")
                 }
                 profileView().tabItem{
                     Label("Profile", systemImage: "person.circle.fill")
