@@ -3,14 +3,15 @@ import SwiftUI
 @main
 struct NovaApp: App {
     let myAPI = API()
+    @State private var request : String = "all"
     @ObservedObject var list = ListModel(myAPI: API())
     var body: some Scene {
         WindowGroup {
             TabView{
-                mainView().tabItem{
+                mainView(request: $request).tabItem{
                     Label("Feed", systemImage: "newspaper.circle.fill")
                 }
-                searchView(api: API()).tabItem{
+                searchView(api: API(), request: $request).tabItem{
                     Label("Search", systemImage: "magnifyingglass.circle.fill")
                 }
                 profileView().tabItem{

@@ -8,7 +8,7 @@ class ViewController: UIViewController {
     func startSignIn() {
         let STATE = String((0..<20).map{ _ in letters.randomElement()!})
         let CLIENT_ID = Bundle.main.object(forInfoDictionaryKey: "CLIENT_ID") as? String
-        let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=" + (CLIENT_ID!) + "&response_type=code&state=" + (STATE) + "&redirect_uri=novaClient://oauth-callback&duration=permanent&scope=identity,vote")
+        let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=" + (CLIENT_ID!) + "&response_type=code&state=" + (STATE) + "&redirect_uri=novaClient://oauth-callback&duration=permanent&scope=identity,vote,read")
         let scheme = "novaClient"
         
         self.session = ASWebAuthenticationSession.init(url: authURL!, callbackURLScheme: scheme, completionHandler: { callbackURL, error in

@@ -2,16 +2,16 @@ import Foundation
 class API{
     func getJSON(for request: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let trimPath = request.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: "https://www.reddit.com/\(trimPath.count == 0 ? "" : "r/\(trimPath)").json") else {
+        guard let url = URL(string: "https://oauth.reddit.com/\(trimPath.count == 0 ? "" : "r/\(trimPath)").json?limit=100") else {
             preconditionFailure("Failed to construct search URL for query: \(request)")
         }
         var request = URLRequest(url: url)
         let token =  UserDefaults.standard.string(forKey: "token")
 
-//        request.httpMethod = "GET"
-//        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Accept")
-//        request.setValue( "Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Accept")
+        request.setValue( "Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request){ data, response, error in
             

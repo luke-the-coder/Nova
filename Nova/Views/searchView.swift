@@ -5,19 +5,22 @@ import SwiftUI
 struct searchView: View{
     @ObservedObject var list = ListModel(myAPI: API())
     let api : API
-    @State private var request = ""
-    @State private var subredditTitle = "r/all"
-    
+    //@State private var request = ""
+    @Binding var request : String
+
+
     var body: some View {
         NavigationStack{
             
             ZStack{
-                Color("LightCyan").ignoresSafeArea()
+                Color("backgroundColor").ignoresSafeArea()
                 VStack{
                     TextField("Search Subreddit", text: self.$request) {
-                        self.subredditTitle = "r/\(self.request.lowercased())"
+                        
                         self.fetchListing()
-                    }.padding()
+                    }.padding().textFieldStyle(.roundedBorder)
+                    
+                    
 //                    Button(action: api.getMe()){
 //                        Text("Just do it")
 //                    }
@@ -25,7 +28,7 @@ struct searchView: View{
                 }
                 
                 
-            }.navigationBarTitle("Search")
+            }.navigationBarTitle("Search").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
         }.onAppear(perform: fetchListing)
     }
     private func fetchListing() {
@@ -33,8 +36,8 @@ struct searchView: View{
     }
 }
 
-struct searchView_Previews: PreviewProvider {
-    static var previews: some View {
-        mainView()
-    }
-}
+//struct searchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        mainView()
+//    }
+//}

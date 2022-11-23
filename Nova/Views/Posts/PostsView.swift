@@ -9,7 +9,11 @@ struct PostsView : View{
     var body : some View{
         VStack(alignment: .leading){
             Text(post.title).bold().accessibilityElement().accessibilityLabel(post.title)
-            Text("u/" + post.author).italic().accessibilityElement().accessibilityLabel("The post author is " + post.author)
+            VStack(alignment: .leading){
+                Text("u/" + post.author).italic().accessibilityElement().accessibilityLabel("The post author is " + post.author)
+                Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
+            }.padding(.top, 1.0)
+            
             
             if (URL(string: post.url)?.pathExtension == "jpg" || URL(string:post.url)?.pathExtension == "png") {
                 ImagesView(URL: post.url)
@@ -32,27 +36,37 @@ struct PostsView : View{
             Divider()
             HStack{
                 Image(systemName: upvote ? "arrowtriangle.up.circle.fill" : "arrowtriangle.up.circle").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Upvote").onTapGesture {
-                    upvote.toggle()
-                    if (upvote){
-                        api.postAPICall(for: post.name, for: String(1))
-                    }else{
-                        api.postAPICall(for: post.name, for: String(0))
+                    if (!downvote){
+                        upvote.toggle()
+                        if (upvote){
+                            api.postAPICall(for: post.name, for: String(1))
+                        }else{
+                            api.postAPICall(for: post.name, for: String(0))
+                        }
                     }
                 }
                 
                 Text(formatPoints(from: post.upvote)).accessibilityElement().accessibilityLabel("The total upvotes are " + String(post.upvote))
-                Image(systemName: "arrowtriangle.down.circle.fill").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Downvote")
+                Image(systemName: downvote ? "arrowtriangle.down.circle.fill" : "arrowtriangle.down.circle").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Downvote").onTapGesture {
+                    if (!upvote){
+                        downvote.toggle()
+                        if (downvote){
+                            api.postAPICall(for: post.name, for: String(-1))
+                        }else{
+                            api.postAPICall(for: post.name, for: String(0))
+                        }
+                    }
+                }
                 
                 Spacer()
                 Text(postTime(from: post.creationTime))
-                Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
+                
                 
             }.padding(.top, 4).onAppear(perform: {checkUpvote(from: post)})
         }
     }
     
     func checkUpvote(from: Post) {
-        print(from.likes)
         if(from.likes == true){
             upvote = true
             downvote = false

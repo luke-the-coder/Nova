@@ -8,8 +8,10 @@ struct profileView: View{
     var body: some View {
         NavigationStack{
             
-            VStack{
-            }.navigationTitle("MyApp").onAppear(perform: startt)
+            ZStack{
+                Color("backgroundColor").ignoresSafeArea()
+                Text("hi")
+            }.navigationTitle("Profile").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)//.onAppear(perform: startt)
         }
     }
     private func startt(){
@@ -17,8 +19,8 @@ struct profileView: View{
     }
 }
 
-struct profileView_Previews: PreviewProvider {
-    static var previews: some View {
-        mainView()
-    }
-}
+//struct profileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        mainView()
+//    }
+//}
