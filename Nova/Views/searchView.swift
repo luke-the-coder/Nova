@@ -17,7 +17,7 @@ struct searchView: View{
                     TextField("Search Subreddit", text: self.$request) {
                         self.subredditTitle = "r/\(self.request.lowercased())"
                         self.fetchListing()
-                    }.padding().onAppear(perform: {api.getMe()})
+                    }.padding()
 //                    Button(action: api.getMe()){
 //                        Text("Just do it")
 //                    }

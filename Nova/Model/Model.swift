@@ -9,6 +9,7 @@ struct Listing {
 
 struct Post: Model {
     let id: String
+    let name: String
     let title: String
     let author: String
     let url: String
@@ -20,6 +21,7 @@ struct Post: Model {
     let upvote : Int
     let creationTime : Int
     let text : String
+    let likes : Bool?
 }
 struct Media: Decodable {
     let type : String?
@@ -31,7 +33,7 @@ struct Video : Decodable{
 
 extension Post: Decodable {
     enum CodingKeys: String, CodingKey{
-        case id, title, author, url, media, domain
+        case id, title, author, url, media, domain, name, likes
         case subreddit = "subreddit_name_prefixed", video = "is_video", comments = "num_comments", upvote = "ups", creationTime = "created_utc", text = "selftext"
         case data
     }
@@ -40,6 +42,7 @@ extension Post: Decodable {
         let dataContainer = try values.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
         
         id = try dataContainer.decode(String.self, forKey: .id)
+        name = try dataContainer.decode(String.self, forKey: .name)
         title = try dataContainer.decode(String.self, forKey: .title)
         author = try dataContainer.decode(String.self, forKey: .author)
         url = try dataContainer.decode(String.self, forKey: .url)
@@ -51,6 +54,7 @@ extension Post: Decodable {
         upvote = try dataContainer.decode(Int.self, forKey: .upvote)
         creationTime = try dataContainer.decode(Int.self, forKey: .creationTime)
         text = try dataContainer.decode(String.self, forKey: .text)
+        likes = try dataContainer.decode(Bool?.self, forKey: .likes)
     }
 }
 
@@ -70,4 +74,21 @@ extension Listing: Decodable {
         
 
     }
+}
+
+
+struct Account : Decodable {
+    let comment_karma : Int
+    let has_mail : Bool?
+    let has_mod_mail : Bool?
+    let has_verified_email : Bool?
+    let id : String
+    let inbox_count : Int
+    let is_friend : Bool?
+    let is_gold : Bool
+    let is_mod : Bool
+    let link_karma : Int
+    let modhash : String?
+    let name : String
+    let over_18: Bool
 }

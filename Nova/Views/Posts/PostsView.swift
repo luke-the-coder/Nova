@@ -2,6 +2,9 @@ import Foundation
 import SwiftUI
 
 struct PostsView : View{
+    let api = API()
+    @State var upvote : Bool = false
+    @State var downvote : Bool = false
     var post : Post
     var body : some View{
         VStack(alignment: .leading){
@@ -28,15 +31,38 @@ struct PostsView : View{
             }
             Divider()
             HStack{
+                Image(systemName: upvote ? "arrowtriangle.up.circle.fill" : "arrowtriangle.up.circle").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Upvote").onTapGesture {
+                    upvote.toggle()
+                    if (upvote){
+                        api.postAPICall(for: post.name, for: String(1))
+                    }else{
+                        api.postAPICall(for: post.name, for: String(0))
+                    }
+                }
                 
-                Image(systemName: "arrowtriangle.up.circle.fill").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Upvote")
                 Text(formatPoints(from: post.upvote)).accessibilityElement().accessibilityLabel("The total upvotes are " + String(post.upvote))
                 Image(systemName: "arrowtriangle.down.circle.fill").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Downvote")
+                
                 Spacer()
                 Text(postTime(from: post.creationTime))
                 Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
                 
-            }.padding(.top, 4)
+            }.padding(.top, 4).onAppear(perform: {checkUpvote(from: post)})
+        }
+    }
+    
+    func checkUpvote(from: Post) {
+        print(from.likes)
+        if(from.likes == true){
+            upvote = true
+            downvote = false
+        }
+        else if(from.likes == false){
+            downvote = true
+            upvote = false
+        } else {
+            upvote = false
+            downvote = false
         }
     }
 
@@ -60,6 +86,7 @@ struct PostsView : View{
             return "\(Int(number))"
         }
     }
+    
     func postTime(from: Int) -> String{
         let currentTime = Date().timeIntervalSince1970
         let postCreationTime = TimeInterval(from)

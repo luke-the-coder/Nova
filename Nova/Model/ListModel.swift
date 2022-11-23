@@ -10,7 +10,7 @@ class ListModel: ObservableObject {
     }
     
     func fetchListing(for request: String) {
-        myAPI.callAPI(for: request) {  [weak self] result in
+        myAPI.getJSON(for: request) {  [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let posts):

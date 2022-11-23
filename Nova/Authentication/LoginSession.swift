@@ -8,7 +8,7 @@ class ViewController: UIViewController {
     func startSignIn() {
         let STATE = String((0..<20).map{ _ in letters.randomElement()!})
         let CLIENT_ID = Bundle.main.object(forInfoDictionaryKey: "CLIENT_ID") as? String
-        let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=" + (CLIENT_ID!) + "&response_type=code&state=" + (STATE) + "&redirect_uri=novaClient://oauth-callback&duration=temporary&scope=identity")
+        let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=" + (CLIENT_ID!) + "&response_type=code&state=" + (STATE) + "&redirect_uri=novaClient://oauth-callback&duration=permanent&scope=identity,vote")
         let scheme = "novaClient"
         
         self.session = ASWebAuthenticationSession.init(url: authURL!, callbackURLScheme: scheme, completionHandler: { callbackURL, error in
@@ -28,12 +28,11 @@ class ViewController: UIViewController {
             print(stateReturned ?? "No state returned")
             print(code ?? "No Code returned")
 
-            //            UserDefaults.standard.set(code?.value, forKey: "code")
             //Parameters
             var requestBodyComponents = URLComponents()
             requestBodyComponents.queryItems = [URLQueryItem(name: "grant_type", value: "authorization_code"),
                                                 URLQueryItem(name: "code", value: code?.value),
-                                                URLQueryItem(name: "redirect_uri", value: "novaClient://oauth-callback")]
+                                                URLQueryItem(name: "redirect_uri", value:"novaClient://oauth-callback")]
 
             let url = URL(string: "https://www.reddit.com/api/v1/access_token")!
             
@@ -73,6 +72,7 @@ class ViewController: UIViewController {
                         return
                     }
                     print(redditResponse)
+                    UserDefaults.standard.set(redditResponse["access_token"], forKey: "token")
                 } catch let error {
                     print(error.localizedDescription)
                 }
