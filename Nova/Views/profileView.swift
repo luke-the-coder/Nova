@@ -3,24 +3,19 @@ import Foundation
 import SwiftUI
 
 struct profileView: View{
-    let logg = ViewController()
-    
+    @State var loggedin = UserDefaults.standard.bool(forKey: "loggedIn")
     var body: some View {
         NavigationStack{
             
             ZStack{
                 Color("backgroundColor").ignoresSafeArea()
-                Text("hi")
+                if (loggedin){
+                    DetailProfileView()
+                } else {
+                    LoginView()
+                }
             }.navigationTitle("Profile").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)//.onAppear(perform: startt)
         }
     }
-    private func startt(){
-        logg.startSignIn()
-    }
-}
 
-//struct profileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        mainView()
-//    }
-//}
+}

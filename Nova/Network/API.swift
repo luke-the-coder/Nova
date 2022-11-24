@@ -2,7 +2,7 @@ import Foundation
 class API{
     func getJSON(for request: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let trimPath = request.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: "https://oauth.reddit.com/\(trimPath.count == 0 ? "" : "r/\(trimPath)").json?limit=100") else {
+        guard let url = URL(string: "https://oauth.reddit.com/\(trimPath)?limit=100") else {
             preconditionFailure("Failed to construct search URL for query: \(request)")
         }
         var request = URLRequest(url: url)
@@ -20,9 +20,8 @@ class API{
                 let data = data ?? Data()
                 let tasks = try decoder.decode(Listing.self, from: data)
                 //print(tasks.posts[23].media?.reddit_video?.fallback_url)
-                print(tasks.posts[0].likes)
                 
-                completion(.success(tasks.posts))
+                completion(.success(tasks.posts!))
                 
             }catch{
                 completion(.failure(error))
@@ -31,9 +30,8 @@ class API{
         }.resume()
     }
     
-    func getAPICall(for request: String, completion: @escaping (Result<Any, Error>) -> Void){
-        let trimmedRequest = request.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: "https://oauth.reddit.com/\(trimmedRequest)") else { return }
+    func getAccountData(completion: @escaping (Result<Welcome, Error>) -> Void){
+        guard let url = URL(string: "https://oauth.reddit.com/user/I_Love_Swift/about.json") else { return }
         let token =  UserDefaults.standard.string(forKey: "token")
 
         var request = URLRequest(url: url)
@@ -46,7 +44,7 @@ class API{
             let decoder = JSONDecoder()
             do{
                 let data = data ?? Data()
-                let json = try decoder.decode(Account.self, from: data)
+                let json = try decoder.decode(Welcome.self, from: data)
                 print(json)
                 completion(.success(json))
             }catch{
@@ -85,9 +83,9 @@ class API{
             guard error == nil else {
                 return
             }
-            print(error)
-            print(data)
-            print(response)
+//            print(error)
+//            print(data)
+//            print(response)
         })
         task.resume()
         

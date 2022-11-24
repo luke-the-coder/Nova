@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E250582292EA36F00B020FE /* DetailProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E250581292EA36F00B020FE /* DetailProfileView.swift */; };
+		0E250584292ED92500B020FE /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E250583292ED92500B020FE /* AccountModel.swift */; };
 		0E4F9FC32928F35F00173878 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F9FC22928F35F00173878 /* VideoView.swift */; };
 		0E4F9FC62928FB6C00173878 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F9FC52928FB6C00173878 /* PostsView.swift */; };
 		0E4F9FC82929613900173878 /* NovaLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E4F9FC72929613900173878 /* NovaLaunchScreen.storyboard */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E250581292EA36F00B020FE /* DetailProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileView.swift; sourceTree = "<group>"; };
+		0E250583292ED92500B020FE /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		0E4F9FC22928F35F00173878 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		0E4F9FC52928FB6C00173878 /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
 		0E4F9FC72929613900173878 /* NovaLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NovaLaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 		0EF6C5AE2925015700D9F2FF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0E250583292ED92500B020FE /* AccountModel.swift */,
 				0EF6C5A82924F34600D9F2FF /* Model.swift */,
 				0EF6C5B82926ECAD00D9F2FF /* ListModel.swift */,
 			);
@@ -161,6 +166,7 @@
 				0EF6C5B229256B4C00D9F2FF /* searchView.swift */,
 				0EF6C5B429256B5900D9F2FF /* profileView.swift */,
 				0E9FDDC3292AC39C00F59FCD /* LoginView.swift */,
+				0E250581292EA36F00B020FE /* DetailProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E9FDDDC292ADACB00F59FCD /* LoginSession.swift in Sources */,
+				0E250582292EA36F00B020FE /* DetailProfileView.swift in Sources */,
 				0EF6C5A92924F34600D9F2FF /* Model.swift in Sources */,
 				0E9FDDE0292B6AFE00F59FCD /* SinglePostView.swift in Sources */,
 				0E4F9FDA292A9FD700173878 /* GifView.swift in Sources */,
@@ -253,6 +260,7 @@
 				0EF6C5B329256B4C00D9F2FF /* searchView.swift in Sources */,
 				0EF6C5972924ED6500D9F2FF /* NovaApp.swift in Sources */,
 				0EF6C5B729257B2C00D9F2FF /* API.swift in Sources */,
+				0E250584292ED92500B020FE /* AccountModel.swift in Sources */,
 				0E9FDDC4292AC39C00F59FCD /* LoginView.swift in Sources */,
 				0EF6C5B529256B5900D9F2FF /* profileView.swift in Sources */,
 				0EF6C5B92926ECAD00D9F2FF /* ListModel.swift in Sources */,

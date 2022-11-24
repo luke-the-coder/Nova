@@ -1,9 +1,10 @@
 import AuthenticationServices
 import Foundation
 
-class ViewController: UIViewController {
+class LoginSession: UIViewController, ObservableObject {
     var session: ASWebAuthenticationSession?
     let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    @Published var isLoggedIn = false
     
     func startSignIn() {
         let STATE = String((0..<20).map{ _ in letters.randomElement()!})
@@ -58,11 +59,11 @@ class ViewController: UIViewController {
             //create dataTask using the session object to send data to the server
             let task = session.dataTask(with: request, completionHandler: { data, response, error in
                 guard error == nil else {
-                    print(error)
+                    //print(error)
                     return
                 }
                 guard let data = data else {
-                    print(data)
+                    //print(data)
                     return
                 }
                 do {
@@ -70,9 +71,12 @@ class ViewController: UIViewController {
                     guard let redditResponse = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {
                         print("ERROR")
                         return
+                        
                     }
                     print(redditResponse)
                     UserDefaults.standard.set(redditResponse["access_token"], forKey: "token")
+                    UserDefaults.standard.set(true, forKey: "loggedIn")
+                    self.isLoggedIn = true
                 } catch let error {
                     print(error.localizedDescription)
                 }
@@ -82,10 +86,11 @@ class ViewController: UIViewController {
         session?.presentationContextProvider = self
         self.session?.start()
         self.session?.prefersEphemeralWebBrowserSession = true
+        
     }
 }
 
-extension ViewController: ASWebAuthenticationPresentationContextProviding {
+extension LoginSession: ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         ASPresentationAnchor()
     }

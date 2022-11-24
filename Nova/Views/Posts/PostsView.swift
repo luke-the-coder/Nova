@@ -8,7 +8,7 @@ struct PostsView : View{
     var post : Post
     var body : some View{
         VStack(alignment: .leading){
-            Text(post.title).bold().accessibilityElement().accessibilityLabel(post.title)
+            Text(post.title ?? "").bold().accessibilityElement().accessibilityLabel(post.title ?? "")
             VStack(alignment: .leading){
                 Text("u/" + post.author).italic().accessibilityElement().accessibilityLabel("The post author is " + post.author)
                 Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
@@ -59,7 +59,7 @@ struct PostsView : View{
                 }
                 
                 Spacer()
-                Text(postTime(from: post.creationTime))
+                Text(postTime(from: post.creationTime ?? 0))
                 
                 
             }.padding(.top, 4).onAppear(perform: {checkUpvote(from: post)})

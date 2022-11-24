@@ -3,8 +3,11 @@ import SwiftUI
 @main
 struct NovaApp: App {
     let myAPI = API()
-    @State private var request : String = "all"
+    
+    @State private var request : String = "r/all"
     @ObservedObject var list = ListModel(myAPI: API())
+    @ObservedObject var account = AccountModel(myAPI: API())
+
     var body: some Scene {
         WindowGroup {
             TabView{

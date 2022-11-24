@@ -4,13 +4,13 @@ protocol Model: Identifiable, Decodable {}
 
 struct Listing {
     let after : String
-    var posts = [Post]() //children
+    let posts : [Post]? //children
 }
 
 struct Post: Model {
     let id: String
     let name: String
-    let title: String
+    let title: String?
     let author: String
     let url: String
     let subreddit: String
@@ -19,7 +19,7 @@ struct Post: Model {
     let domain : String
     let comments: Int
     let upvote : Int
-    let creationTime : Int
+    let creationTime : Int?
     let text : String
     let likes : Bool?
 }
@@ -75,9 +75,12 @@ extension Listing: Decodable {
 
     }
 }
+struct Welcome : Codable{
+    let kind : String
+    let data : Account
+}
 
-
-struct Account : Decodable {
+struct Account : Codable {
     let comment_karma : Int
     let has_mail : Bool?
     let has_mod_mail : Bool?
@@ -91,4 +94,51 @@ struct Account : Decodable {
     let modhash : String?
     let name : String
     let over_18: Bool
+    let icon_img : String
+    let num_friends : Int
+    let created_utc : Int
+    let verified : Bool
 }
+//
+//extension Account {
+//enum CodingKeys: String, CodingKey {
+//        case comment_karma
+//        case has_mail
+//        case has_mod_mail
+//        case has_verified_email
+//        case id
+//        case inbox_count
+//        case is_friend
+//        case is_gold
+//        case is_mod
+//        case link_karma
+//        case modhash
+//        case name
+//        case over_18
+//    }
+//    
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        self.comment_karma = try container.decode(Int.self, forKey: .comment_karma)
+//        self.has_mail = try container.decodeIfPresent(Bool.self, forKey: .has_mail)
+//        self.has_mod_mail = try container.decodeIfPresent(Bool.self, forKey: .has_mod_mail)
+//        self.has_verified_email = try container.decodeIfPresent(Bool.self, forKey: .has_verified_email)
+//        self.id = try container.decode(String.self, forKey: .id)
+//        self.inbox_count = try container.decode(Int.self, forKey: .inbox_count)
+//        self.is_friend = try container.decodeIfPresent(Bool.self, forKey: .is_friend)
+//        self.is_gold = try container.decode(Bool.self, forKey: .is_gold)
+//        self.is_mod = try container.decode(Bool.self, forKey: .is_mod)
+//        self.link_karma = try container.decode(Int.self, forKey: .link_karma)
+//        self.modhash = try container.decodeIfPresent(String.self, forKey: .modhash)
+//        self.name = try container.decode(String.self, forKey: .name)
+//        self.over_18 = try container.decode(Bool.self, forKey: .over_18)
+//    }
+//}
+//
+//
+//
+//
+////struct AccountDetails : Codable{
+////    let icon_img : String
+////}
+//
