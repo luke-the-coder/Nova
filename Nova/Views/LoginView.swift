@@ -21,7 +21,7 @@ struct LoginView : View {
                         Button("Login"){
                             isZoomed.toggle()
                             login.startSignIn()
-                        }
+                        }.accessibilityElement().accessibilityLabel("Downvote")
                     }.padding()
                 }
                 .navigationTitle("Profile - Login").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)

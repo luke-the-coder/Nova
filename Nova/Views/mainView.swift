@@ -14,7 +14,7 @@ struct mainView: View{
                     Section(header: Spacer(minLength: 0)){
                         PostsView(post: post)
                     }
-                }.scrollContentBackground(.hidden).listStyle(.grouped)
+                }.scrollContentBackground(.hidden).listStyle(.grouped).cornerRadius(10)
                 
             }.navigationTitle(request).toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar).onAppear(perform: fetchListing)
         }

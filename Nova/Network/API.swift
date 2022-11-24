@@ -1,18 +1,29 @@
 import Foundation
 class API{
     func getJSON(for request: String, completion: @escaping (Result<[Post], Error>) -> Void){
+        let token =  UserDefaults.standard.string(forKey: "token")
         let trimPath = request.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: "https://oauth.reddit.com/\(trimPath)?limit=100") else {
+        var subdomain : String
+    
+        if (token != nil){
+            subdomain = "oauth"
+        } else {
+            subdomain = "www"
+        }
+        print (trimPath)
+        print (subdomain)
+        guard let url = URL(string: "https://\(subdomain).reddit.com/\(trimPath).json?limit=100") else {
             preconditionFailure("Failed to construct search URL for query: \(request)")
         }
+        print(url)
         var request = URLRequest(url: url)
-        let token =  UserDefaults.standard.string(forKey: "token")
 
         request.httpMethod = "GET"
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Accept")
-        request.setValue( "Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
-        
+        if (token != nil){
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Accept")
+            request.setValue( "Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
+        }
         URLSession.shared.dataTask(with: request){ data, response, error in
             
             let decoder = JSONDecoder()

@@ -5,7 +5,7 @@ struct DetailProfileView: View {
     let myAPI = API()
     @ObservedObject var account = AccountModel(myAPI: API())
     @ObservedObject var list = ListModel(myAPI: API())
-
+    @State private var loggedOut : Bool = false
     var body: some View {
         NavigationStack{
             
@@ -18,7 +18,8 @@ struct DetailProfileView: View {
                                 Image(systemName: "arrow.2.circlepath.circle")
                                     .font(.largeTitle)
                                     .opacity(0.3)
-                            }.retry(maxCount: 3, interval: .seconds(5)).resizable().aspectRatio(contentMode: .fit).frame(width: 100, height: 100)
+                            }.retry(maxCount: 3, interval: .seconds(5)).resizable().aspectRatio(contentMode: .fit).frame(width: 100, height: 100).accessibilityElement().accessibilityLabel("Profile image")
+                            
                             Text(account.account?.data.name ?? "novalue").bold()
                         }.padding()
                         VStack(alignment: .leading, spacing: 8){
@@ -31,20 +32,31 @@ struct DetailProfileView: View {
                     Spacer()
                 }
                 
-//                List(list.posts){ post in
-//                    Section(header: Spacer(minLength: 0)){
-//                        PostsView(post: post)
-//                    }
-//                }.scrollContentBackground(.hidden).listStyle(.grouped)
+                //                List(list.posts){ post in
+                //                    Section(header: Spacer(minLength: 0)){
+                //                        PostsView(post: post)
+                //                    }
+                //                }.scrollContentBackground(.hidden).listStyle(.grouped)
                 
-            }.navigationTitle("Profile").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar).onAppear(perform: fetchAccount)
+            }.navigationTitle("Profile").toolbarBackground(Color("navigationColor"), for: .navigationBar).toolbarBackground(.visible, for: .navigationBar).onAppear(perform: fetchAccount).toolbar{
+                ToolbarItem(placement: .navigationBarTrailing){
+                    Button("Logout") {
+                        UserDefaults.standard.set(false, forKey: "loggedIn")
+                        UserDefaults.standard.removeObject(forKey: "token")
+                        loggedOut = true
+                    }
+                }
+            }.navigationDestination(isPresented: $loggedOut){
+                profileView(loggedin: false)
+                    .navigationBarBackButtonHidden(true)
+                
+            }
         }
-        
+    }
+        private func fetchAccount() {
+            account.fetchAccount()
+            //        list.fetchListing(for: "user/I_Love_Swift.json")
         
     }
-    private func fetchAccount() {
-        account.fetchAccount()
-//        list.fetchListing(for: "user/I_Love_Swift.json")
-    }
+    
 }
-

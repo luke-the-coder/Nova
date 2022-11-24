@@ -5,14 +5,13 @@ struct PostsView : View{
     let api = API()
     @State var upvote : Bool = false
     @State var downvote : Bool = false
+    @State private var showingAlert = false
+
     var post : Post
     var body : some View{
         VStack(alignment: .leading){
             Text(post.title ?? "").bold().accessibilityElement().accessibilityLabel(post.title ?? "")
-            VStack(alignment: .leading){
-                Text("u/" + post.author).italic().accessibilityElement().accessibilityLabel("The post author is " + post.author)
-                Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
-            }.padding(.top, 1.0)
+
             
             
             if (URL(string: post.url)?.pathExtension == "jpg" || URL(string:post.url)?.pathExtension == "png") {
@@ -34,34 +33,52 @@ struct PostsView : View{
 
             }
             Divider()
+            HStack(){
+                Text("u/" + post.author).italic().accessibilityElement().accessibilityLabel("The post author is " + post.author)
+                Spacer()
+                Text(post.subreddit).italic().accessibilityElement().accessibilityLabel("The subreddit is " + post.subreddit)
+            }.padding(.top, 1.0)
             HStack{
                 Image(systemName: upvote ? "arrowtriangle.up.circle.fill" : "arrowtriangle.up.circle").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Upvote").onTapGesture {
-                    if (!downvote){
-                        upvote.toggle()
-                        if (upvote){
-                            api.postAPICall(for: post.name, for: String(1))
-                        }else{
-                            api.postAPICall(for: post.name, for: String(0))
+                    if(UserDefaults.standard.bool(forKey: "loggedIn")){
+                        
+                        if (!downvote){
+                            upvote.toggle()
+                            if (upvote){
+                                api.postAPICall(for: post.name, for: String(1))
+                            }else{
+                                api.postAPICall(for: post.name, for: String(0))
+                            }
                         }
+                    } else {
+                        showingAlert = true
                     }
                 }
                 
                 Text(formatPoints(from: post.upvote)).accessibilityElement().accessibilityLabel("The total upvotes are " + String(post.upvote))
                 Image(systemName: downvote ? "arrowtriangle.down.circle.fill" : "arrowtriangle.down.circle").font(.system(size: 20, weight: .thin)).accessibilityElement().accessibilityLabel("Downvote").onTapGesture {
-                    if (!upvote){
-                        downvote.toggle()
-                        if (downvote){
-                            api.postAPICall(for: post.name, for: String(-1))
-                        }else{
-                            api.postAPICall(for: post.name, for: String(0))
+                    if(UserDefaults.standard.bool(forKey: "loggedIn")){
+                        if (!upvote){
+                            downvote.toggle()
+                            if (downvote){
+                                api.postAPICall(for: post.name, for: String(-1))
+                            }else{
+                                api.postAPICall(for: post.name, for: String(0))
+                            }
                         }
+                    } else {
+                        showingAlert = true
                     }
-                }
+                }.alert("Error: you need to be logged-in to upvote", isPresented: $showingAlert) {
+                        Button("OK", role: .cancel) { }
+                    }
                 
                 Spacer()
-                Text(postTime(from: post.creationTime ?? 0))
-                
-                
+                Text(postTime(from: post.creationTime ?? 0)).accessibilityElement().accessibilityLabel("The post was created " + postTime(from: post.creationTime ?? 0) + "ago")
+                HStack{
+                    Image(systemName: "bubble.left.and.bubble.right.fill").font(.system(size: 12, weight: .thin))
+                    Text(String(post.comments))
+                }.accessibilityElement().accessibilityLabel("There are " + String(post.comments) + " comments")
             }.padding(.top, 4).onAppear(perform: {checkUpvote(from: post)})
         }
     }
